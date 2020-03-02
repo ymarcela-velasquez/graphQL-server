@@ -1,0 +1,116 @@
+ 
+ get Course
+ 
+Query:
+
+ query getSingleCourse($courseID: Int!){
+  course(id: $courseID){
+    title
+    author
+    description
+    topic
+    url
+  }
+}
+
+
+Query variables: 
+{"courseID":  1}
+
+
+Response:
+
+{
+  "data": {
+    "course": {
+      "title": "Nodejs Course",
+      "author": "John Carter",
+      "description": null,
+      "topic": "Javascript",
+      "url": "http://faztweb.com"
+    }
+  }
+}
+
+
+get Courses
+
+Query:
+query getCourses($topic: String!){
+  courses(topic: $topic){
+    id
+    title
+    description
+    author
+    topic
+    url
+  }
+}
+
+Query variables:
+
+{
+  "topic": "Javascript"
+}
+
+Response: 
+{
+  "data": {
+    "courses": [
+      {
+        "id": 1,
+        "title": "Nodejs Course",
+        "description": null,
+        "author": "John Carter",
+        "topic": "Javascript",
+        "url": "http://faztweb.com"
+      },
+      {
+        "id": 3,
+        "title": "Redux Course",
+        "description": null,
+        "author": "John Carter",
+        "topic": "Javascript",
+        "url": "http://faztweb.com"
+      }
+    ]
+  }
+}
+
+Fragmentos
+
+Query:
+query getCoursesWithFragments($courseID1: Int!, $courseID2: Int!){
+  course1: course(id: $courseID1){
+    ...courseFields
+    
+  }
+  course2: course(id: $courseID2){
+    ...courseFields
+  }  
+}
+fragment courseFields on Course{
+  title
+  author
+  
+}
+
+Query variables:
+{
+  "courseID1": 1,
+  "courseID2": 3
+}
+
+Response:
+{
+  "data": {
+    "course1": {
+      "title": "Nodejs Course",
+      "author": "John Carter"
+    },
+    "course2": {
+      "title": "Redux Course",
+      "author": "John Carter"
+    }
+  }
+}
